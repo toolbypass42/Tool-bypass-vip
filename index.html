@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>GTraffic Bypass Tool</title>
+<title>GREEN BYPASS</title>
 
 <style>
 *{
@@ -14,10 +14,10 @@
 
 body{
     min-height:100vh;
-    background:#020604;
+    background:#020602;
     color:#00ff66;
     font-family:Consolas,monospace;
-    overflow-x:hidden;
+    padding:20px 0;
 }
 
 body:before{
@@ -25,129 +25,146 @@ body:before{
     position:fixed;
     inset:0;
     pointer-events:none;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            rgba(0,255,80,.025) 0px,
-            rgba(0,255,80,.025) 1px,
-            transparent 1px,
-            transparent 4px
-        );
-    z-index:5;
+    background:repeating-linear-gradient(
+        0deg,
+        rgba(0,255,80,.025) 0px,
+        rgba(0,255,80,.025) 1px,
+        transparent 1px,
+        transparent 4px
+    );
 }
 
 .container{
     width:min(680px,94%);
-    margin:25px auto;
-    position:relative;
+    margin:auto;
 }
 
 .logo{
     text-align:center;
     font-size:30px;
     font-weight:bold;
-    text-shadow:
-        0 0 5px #00ff66,
-        0 0 20px #00ff66;
+    text-shadow:0 0 8px #00ff66,0 0 25px #00ff66;
     margin-bottom:5px;
 }
 
 .subtitle{
     text-align:center;
-    color:#65ff9b;
+    color:#55ff99;
     font-size:12px;
     margin-bottom:20px;
 }
 
 .card{
+    background:rgba(0,15,7,.95);
     border:1px solid #00ff66;
-    background:rgba(0,15,7,.92);
-    box-shadow:
-        0 0 10px rgba(0,255,80,.25),
-        inset 0 0 30px rgba(0,255,80,.03);
+    border-radius:8px;
     padding:18px;
     margin-bottom:15px;
-    border-radius:8px;
+    box-shadow:0 0 15px rgba(0,255,80,.15);
 }
 
 .title{
-    color:#fff;
-    font-size:14px;
-    margin-bottom:13px;
+    color:white;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    margin-top:7px;
+    background:#000;
+    color:#00ff66;
+    border:1px solid #087936;
+    border-radius:5px;
+    outline:none;
+    font-family:inherit;
+}
+
+input:focus{
+    border-color:#00ff66;
+    box-shadow:0 0 10px rgba(0,255,80,.3);
+}
+
+button{
+    width:100%;
+    padding:13px;
+    margin-top:10px;
+    border:0;
+    border-radius:5px;
+    background:#00ff66;
+    color:#001b08;
+    font-family:inherit;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    box-shadow:0 0 18px #00ff66;
+}
+
+.getCode{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    padding:12px;
+    margin-top:10px;
+    border:1px solid #00ff66;
+    border-radius:5px;
+    color:#00ff66;
+    background:#031109;
+}
+
+.getCode:hover{
+    background:#00ff66;
+    color:#001b08;
+    box-shadow:0 0 15px #00ff66;
+}
+
+.message{
+    display:none;
+    margin-top:12px;
+    padding:12px;
+    border-radius:5px;
+    line-height:1.5;
+}
+
+.red{
+    color:#ff3030;
+    border:1px solid #ff3030;
+    background:rgba(80,0,0,.2);
+}
+
+.green{
+    color:#00ff66;
+    border:1px solid #00ff66;
 }
 
 .sites{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:9px;
+    gap:8px;
 }
 
 .site{
+    padding:11px 5px;
+    text-align:center;
     border:1px solid #075c2d;
     background:#031109;
-    color:#72ff9d;
-    padding:11px 8px;
+    color:#70ff9c;
     border-radius:5px;
     cursor:pointer;
-    text-align:center;
-    transition:.2s;
     font-size:13px;
 }
 
-.site:hover{
-    border-color:#00ff66;
-    box-shadow:0 0 12px rgba(0,255,80,.35);
-}
-
 .site.selected{
-    color:#001b09;
-    background:#00ff66;
-    border-color:#00ff66;
-    box-shadow:0 0 15px #00ff66;
-}
-
-input{
-    width:100%;
-    padding:14px;
-    background:#000;
-    color:#00ff66;
-    border:1px solid #087936;
-    outline:none;
-    border-radius:5px;
-    font-family:Consolas,monospace;
-    margin-top:8px;
-}
-
-input:focus{
-    border-color:#00ff66;
-    box-shadow:0 0 10px rgba(0,255,80,.25);
-}
-
-button{
-    width:100%;
-    margin-top:12px;
-    padding:14px;
-    border:none;
-    border-radius:5px;
     background:#00ff66;
     color:#001b08;
-    font-weight:bold;
-    font-family:Consolas,monospace;
-    cursor:pointer;
-    transition:.2s;
+    border-color:#00ff66;
+    box-shadow:0 0 12px #00ff66;
 }
 
-button:hover{
-    box-shadow:0 0 20px #00ff66;
-}
-
-button:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-    box-shadow:none;
-}
-
-.status{
+.hidden{
     display:none;
 }
 
@@ -157,39 +174,33 @@ button:disabled{
     font-size:13px;
 }
 
-.ok{
-    color:#00ff66;
-}
-
 .wait{
     color:#ffff55;
 }
 
-.error{
-    color:#ff3030;
-    text-shadow:0 0 8px rgba(255,0,0,.4);
+.ok{
+    color:#00ff66;
 }
 
 .timer{
     text-align:center;
-    font-size:34px;
+    font-size:36px;
     font-weight:bold;
-    margin:12px 0;
+    margin:12px;
     text-shadow:0 0 15px #00ff66;
 }
 
 .progress{
-    width:100%;
     height:8px;
-    background:#001c0b;
-    border:1px solid #075c2d;
+    background:#001b09;
     border-radius:10px;
     overflow:hidden;
+    border:1px solid #075c2d;
 }
 
-.progress-bar{
-    height:100%;
+.progressBar{
     width:0%;
+    height:100%;
     background:#00ff66;
     box-shadow:0 0 10px #00ff66;
     transition:width 1s linear;
@@ -198,31 +209,16 @@ button:disabled{
 .result{
     display:none;
     margin-top:15px;
-    padding:16px;
-    border:1px solid #ff2222;
-    background:rgba(35,0,0,.35);
-    border-radius:5px;
-}
-
-.result-title{
+    padding:14px;
+    border:1px solid #ff3030;
     color:#ff3030;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.demo{
-    margin-top:12px;
-    padding:10px;
-    border:1px dashed #075c2d;
-    color:#70ff9c;
-    font-size:12px;
+    line-height:1.5;
 }
 
 .footer{
     text-align:center;
-    color:#27683e;
+    color:#246b40;
     font-size:10px;
-    margin-top:15px;
 }
 
 @media(max-width:500px){
@@ -241,15 +237,53 @@ button:disabled{
 
 <div class="container">
 
-    <div class="logo">BYPASS SYSTEM</div>
-    <div class="subtitle">
-        SECURE LINK VERIFICATION // DEMO MODE
+<div class="logo">GREEN BYPASS</div>
+<div class="subtitle">SECURE ACCESS SYSTEM</div>
+
+<div class="card" id="loginCard">
+
+    <div class="title">▣ TRUY CẬP HỆ THỐNG</div>
+
+    <div>
+        Vui lòng nhập mã để truy cập
     </div>
 
+    <input
+        id="accessCode"
+        type="text"
+        placeholder="Nhập mã truy cập..."
+        autocomplete="off"
+    >
+
+    <!-- LINK LẤY CODE ĐÃ ĐỔI -->
+    <a
+        class="getCode"
+        id="getCode"
+        href="https://lentop.one/ddxBSv"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        🔑 LẤY CODE
+    </a>
+
+    <button onclick="checkCode()">
+        🔐 XÁC NHẬN MÃ
+    </button>
+
+    <div id="codeMessage" class="message"></div>
+
+</div>
+
+<div id="tool" class="hidden">
+
     <div class="card">
-        <div class="title">▣ CHỌN HỆ THỐNG XÁC NHẬN</div>
+
+        <div class="title">
+            ▣ CHỌN HỆ THỐNG XÁC NHẬN
+        </div>
 
         <div class="sites">
+
             <div class="site" data-site="Gtraffic.io">
                 Gtraffic.io
             </div>
@@ -277,86 +311,172 @@ button:disabled{
             <div class="site" data-site="Ontop.link">
                 Ontop.link
             </div>
+
         </div>
 
-        <div class="demo">
-            ⚠ Chọn một hoặc nhiều hệ thống phía trên để xác nhận.
-        </div>
     </div>
-
 
     <div class="card">
 
-        <div class="title">▣ URL CẦN VƯỢT LINK</div>
+        <div class="title">
+            ▣ URL CẦN VƯỢT LINK
+        </div>
 
         <input
-            id="urlInput"
+            id="url"
             type="url"
-            placeholder="Dán URL https:// của web cần vượt link..."
-            autocomplete="off"
+            placeholder="Dán URL https:// của web cần vượt link"
         >
 
-        <button id="bypassBtn">
+        <button id="bypass">
             ⚡ VƯỢT LINK
         </button>
 
+        <div id="urlMessage" class="message"></div>
+
     </div>
 
+    <div class="card" id="statusCard" style="display:none">
 
-    <div class="card status" id="statusBox">
-
-        <div class="title">▣ TRẠNG THÁI HỆ THỐNG</div>
+        <div class="title">
+            ▣ TRẠNG THÁI HỆ THỐNG
+        </div>
 
         <div class="timer" id="timer">15</div>
 
         <div class="progress">
-            <div class="progress-bar" id="progress"></div>
+            <div
+                class="progressBar"
+                id="progressBar">
+            </div>
         </div>
 
         <br>
 
         <div id="logs">
-
             <div class="status-line ok">
                 Trạng thái: Sẵn sàng
             </div>
-
         </div>
 
-        <div class="result" id="result">
-            <div class="result-title" id="resultTitle"></div>
-            <div id="resultText"></div>
-        </div>
+        <div id="result" class="result"></div>
 
-    </div>
-
-    <div class="footer">
-        BYPASS SYSTEM // SIMULATION INTERFACE
     </div>
 
 </div>
 
+<div class="footer">
+GREEN BYPASS SYSTEM • DEMO
+</div>
+
+</div>
 
 <script>
 
-const sites = document.querySelectorAll(".site");
-const input = document.getElementById("urlInput");
-const btn = document.getElementById("bypassBtn");
+/* =========================
+   LINK LẤY CODE
+========================= */
 
-const statusBox = document.getElementById("statusBox");
-const logs = document.getElementById("logs");
-const timer = document.getElementById("timer");
-const progress = document.getElementById("progress");
+const codePage =
+    "https://lentop.one/ddxBSv";
 
-const result = document.getElementById("result");
-const resultTitle = document.getElementById("resultTitle");
-const resultText = document.getElementById("resultText");
+document.getElementById("getCode").href = codePage;
+
+
+/* =========================
+   MÃ TRUY CẬP
+========================= */
+
+const firstCode = "K8F2M9P4VT";
+
+const secondCode = "7B9X3W1R5Z";
+
+const validCodes = [
+    "P4N8Q2Y6KD",
+    "9J3C7V1M8L",
+    "W5T2B9R4HX",
+    "2M8G6K1P9S",
+    "X7L3D9V4B2",
+    "R1P9H5Z3C8",
+    "4V8N2Q6M1K"
+];
+
+
+/* =========================
+   KIỂM TRA CODE
+========================= */
+
+function checkCode(){
+
+    const code =
+        document.getElementById("accessCode")
+        .value.trim();
+
+    const msg =
+        document.getElementById("codeMessage");
+
+    msg.style.display = "block";
+
+    if(code === firstCode){
+
+        msg.className = "message red";
+
+        msg.textContent =
+            "Mã bạn cấp không chính xác. " +
+            "Quay lại vào ngày mai.";
+
+        return;
+    }
+
+    if(code === secondCode){
+
+        msg.className = "message green";
+
+        msg.textContent =
+            "Mã chính xác! Đang mở khóa...";
+
+        setTimeout(openTool,700);
+
+        return;
+    }
+
+    if(validCodes.includes(code)){
+
+        msg.className = "message green";
+
+        msg.textContent =
+            "Mã hợp lệ! Đang mở khóa...";
+
+        setTimeout(openTool,700);
+
+        return;
+    }
+
+    msg.className = "message red";
+
+    msg.textContent =
+        "Mã truy cập không hợp lệ.";
+}
+
+
+function openTool(){
+
+    document.getElementById("loginCard")
+        .style.display = "none";
+
+    document.getElementById("tool")
+        .classList.remove("hidden");
+
+}
+
+
+/* =========================
+   CHỌN SITE
+========================= */
 
 let selectedSites = [];
 
-
-// Chọn hệ thống
-sites.forEach(site => {
+document.querySelectorAll(".site").forEach(site => {
 
     site.addEventListener("click", () => {
 
@@ -365,10 +485,16 @@ sites.forEach(site => {
         site.classList.toggle("selected");
 
         if(site.classList.contains("selected")){
+
             selectedSites.push(name);
+
         }else{
+
             selectedSites =
-                selectedSites.filter(x => x !== name);
+                selectedSites.filter(
+                    x => x !== name
+                );
+
         }
 
     });
@@ -376,12 +502,15 @@ sites.forEach(site => {
 });
 
 
-// Kiểm tra URL
-function validHttps(url){
+/* =========================
+   KIỂM TRA HTTPS
+========================= */
+
+function validHttps(value){
 
     try{
 
-        const u = new URL(url);
+        const u = new URL(value);
 
         return u.protocol === "https:";
 
@@ -394,217 +523,226 @@ function validHttps(url){
 }
 
 
-// Thêm log
-function addLog(text, type="ok"){
+/* =========================
+   LOG
+========================= */
 
-    const div = document.createElement("div");
+function addLog(text,type="ok"){
 
-    div.className = "status-line " + type;
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "status-line " + type;
 
     div.textContent = text;
 
-    logs.appendChild(div);
+    document.getElementById("logs")
+        .appendChild(div);
 
 }
 
 
-// Xác định demo destination
-function getDemoDestination(url){
+/* =========================
+   NÚT BYPASS
+========================= */
 
-    const lower = url.toLowerCase();
+document.getElementById("bypass")
+.addEventListener("click", () => {
 
-    if(lower.includes("layma.net")){
-        return "DEMO_DESTINATION_LAYMA";
-    }
+    const url =
+        document.getElementById("url")
+        .value.trim();
 
-    if(lower.includes("link4m.net")){
-        return "DEMO_DESTINATION_LINK4M";
-    }
+    const msg =
+        document.getElementById("urlMessage");
 
-    if(lower.includes("bbmkt")){
-        return "DEMO_DESTINATION_BBMKT";
-    }
-
-    if(lower.includes("gtraffic.io")){
-        return "DEMO_DESTINATION_GTRAFFIC";
-    }
-
-    return "DEMO_DESTINATION";
-}
-
-
-// Bắt đầu
-btn.addEventListener("click", () => {
-
-    const url = input.value.trim();
+    msg.style.display = "block";
 
     if(!url){
 
-        alert("Vui lòng nhập URL.");
+        msg.className = "message red";
+
+        msg.textContent =
+            "Vui lòng nhập URL.";
 
         return;
 
     }
-
 
     if(!validHttps(url)){
 
-        alert("Chỉ chấp nhận URL bắt đầu bằng https://");
+        msg.className = "message red";
+
+        msg.textContent =
+            "Chỉ chấp nhận dạng https://";
 
         return;
 
     }
-
 
     if(selectedSites.length === 0){
 
-        alert("Vui lòng chọn ít nhất một hệ thống.");
+        msg.className = "message red";
+
+        msg.textContent =
+            "Vui lòng chọn ít nhất một hệ thống.";
 
         return;
 
     }
 
+    msg.style.display = "none";
 
-    // Hiện bảng trạng thái
-    statusBox.style.display = "block";
+    const card =
+        document.getElementById("statusCard");
 
-    result.style.display = "none";
+    card.style.display = "block";
 
-    logs.innerHTML =
-        '<div class="status-line ok">Trạng thái: Sẵn sàng</div>';
+    document.getElementById("logs").innerHTML =
+        '<div class="status-line ok">' +
+        'Trạng thái: Sẵn sàng' +
+        '</div>';
 
-    btn.disabled = true;
+    document.getElementById("result")
+        .style.display = "none";
 
-    input.disabled = true;
+    const button =
+        document.getElementById("bypass");
 
+    button.disabled = true;
 
     let seconds = 15;
 
+    const timer =
+        document.getElementById("timer");
+
+    const bar =
+        document.getElementById("progressBar");
+
     timer.textContent = seconds;
 
-    progress.style.width = "0%";
+    bar.style.width = "0%";
 
-
-    addLog("Đang kiểm tra kết nối...", "wait");
-
-
-    setTimeout(() => {
-
-        addLog("Kết nối thành công!", "ok");
-
-    }, 1000);
-
+    addLog(
+        "Đang kiểm tra kết nối...",
+        "wait"
+    );
 
     setTimeout(() => {
-
-        addLog("Đang tải module...", "wait");
-
-    }, 2000);
-
-
-    setTimeout(() => {
-
-        addLog("Tải module hoàn tất!", "ok");
-
-    }, 4000);
-
-
-    setTimeout(() => {
-
-        addLog("Đang giả lập bypass...", "wait");
-
-    }, 6000);
-
-
-    setTimeout(() => {
-
-        addLog("Bỏ qua xác thực...", "wait");
-
-    }, 8000);
-
-
-    setTimeout(() => {
-
-        addLog("Đang xác nhận...", "wait");
-
-    }, 10000);
-
-
-    const interval = setInterval(() => {
-
-        seconds--;
-
-        timer.textContent = seconds;
-
-        progress.style.width =
-            ((15 - seconds) / 15 * 100) + "%";
-
-
-        if(seconds <= 0){
-
-            clearInterval(interval);
-
-            finish(url);
-
-        }
-
+        addLog(
+            "Kết nối thành công!",
+            "ok"
+        );
     },1000);
+
+    setTimeout(() => {
+        addLog(
+            "Đang tải module...",
+            "wait"
+        );
+    },2000);
+
+    setTimeout(() => {
+        addLog(
+            "Tải module hoàn tất!",
+            "ok"
+        );
+    },4000);
+
+    setTimeout(() => {
+        addLog(
+            "Đang giả lập bypass...",
+            "wait"
+        );
+    },6000);
+
+    setTimeout(() => {
+        addLog(
+            "Bỏ qua xác thực...",
+            "wait"
+        );
+    },8000);
+
+    setTimeout(() => {
+        addLog(
+            "Đang xác nhận...",
+            "wait"
+        );
+    },10000);
+
+    const interval =
+        setInterval(() => {
+
+            seconds--;
+
+            timer.textContent = seconds;
+
+            bar.style.width =
+                ((15 - seconds) / 15 * 100) + "%";
+
+            if(seconds <= 0){
+
+                clearInterval(interval);
+
+                finish();
+
+            }
+
+        },1000);
 
 });
 
 
-// Kết quả sau 15 giây
-function finish(url){
+/* =========================
+   KẾT QUẢ
+========================= */
 
-    progress.style.width = "100%";
+function finish(){
 
-    timer.textContent = "✓";
+    document.getElementById("timer")
+        .textContent = "✓";
 
-    addLog("Bypass thành công!", "ok");
+    document.getElementById("progressBar")
+        .style.width = "100%";
+
+    addLog(
+        "Bypass thành công!",
+        "ok"
+    );
 
     addLog(
         "Bạn đã vượt qua giới hạn!",
         "ok"
     );
 
-
-    /*
-       Tỷ lệ mô phỏng:
-       85% = lỗi kết nối thiết bị
-       15% = Error 404
-    */
-
-    const random = Math.random();
+    const result =
+        document.getElementById("result");
 
     result.style.display = "block";
 
+    if(Math.random() < 0.85){
 
-    if(random < 0.85){
-
-        resultTitle.textContent =
-            "LỖI KẾT NỐI THIẾT BỊ";
-
-        resultText.textContent =
-            "Lỗi kết nối thiết bị, vui lòng kiểm tra kết nối mạng của bạn.";
+        result.innerHTML =
+            "<b>LỖI KẾT NỐI THIẾT BỊ</b><br><br>" +
+            "Lỗi kết nối thiết bị, vui lòng " +
+            "kiểm tra kết nối mạng của bạn.";
 
     }else{
 
-        resultTitle.textContent =
-            "ERROR 404";
-
-        resultText.textContent =
-            "Web ghi error 404 — do not accept this action.";
+        result.innerHTML =
+            "<b>ERROR 404</b><br><br>" +
+            "Web ghi error 404 — " +
+            "do not accept this action.";
 
     }
 
-
-    btn.disabled = false;
-
-    input.disabled = false;
+    document.getElementById("bypass")
+        .disabled = false;
 
 }
 
 </script>
 
 </body>
-      </html>
+</html>
