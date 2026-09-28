@@ -64,7 +64,7 @@ body:before{
 }
 
 .title{
-    color:white;
+    color:#fff;
     font-weight:bold;
     margin-bottom:12px;
 }
@@ -103,6 +103,11 @@ button:hover{
     box-shadow:0 0 18px #00ff66;
 }
 
+button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
 .getCode{
     display:block;
     text-align:center;
@@ -118,7 +123,6 @@ button:hover{
 .getCode:hover{
     background:#00ff66;
     color:#001b08;
-    box-shadow:0 0 15px #00ff66;
 }
 
 .message{
@@ -215,6 +219,14 @@ button:hover{
     line-height:1.5;
 }
 
+.info{
+    margin-top:12px;
+    padding:10px;
+    border:1px dashed #075c2d;
+    color:#55ff99;
+    font-size:12px;
+}
+
 .footer{
     text-align:center;
     color:#246b40;
@@ -240,9 +252,16 @@ button:hover{
 <div class="logo">GREEN BYPASS</div>
 <div class="subtitle">SECURE ACCESS SYSTEM</div>
 
+
+<!-- =========================
+     ĐĂNG NHẬP
+========================= -->
+
 <div class="card" id="loginCard">
 
-    <div class="title">▣ TRUY CẬP HỆ THỐNG</div>
+    <div class="title">
+        ▣ TRUY CẬP HỆ THỐNG
+    </div>
 
     <div>
         Vui lòng nhập mã để truy cập
@@ -255,11 +274,10 @@ button:hover{
         autocomplete="off"
     >
 
-    <!-- LINK LẤY CODE ĐÃ ĐỔI -->
     <a
         class="getCode"
         id="getCode"
-        href="https://lentop.one/ddxBSv"
+        href="https://lentop.one/ucb6ggk"
         target="_blank"
         rel="noopener noreferrer"
     >
@@ -273,6 +291,11 @@ button:hover{
     <div id="codeMessage" class="message"></div>
 
 </div>
+
+
+<!-- =========================
+     TOOL
+========================= -->
 
 <div id="tool" class="hidden">
 
@@ -316,6 +339,7 @@ button:hover{
 
     </div>
 
+
     <div class="card">
 
         <div class="title">
@@ -336,13 +360,20 @@ button:hover{
 
     </div>
 
+
+    <!-- =========================
+         TRẠNG THÁI
+    ========================= -->
+
     <div class="card" id="statusCard" style="display:none">
 
         <div class="title">
             ▣ TRẠNG THÁI HỆ THỐNG
         </div>
 
-        <div class="timer" id="timer">15</div>
+        <div class="timer" id="timer">
+            15
+        </div>
 
         <div class="progress">
             <div
@@ -353,11 +384,7 @@ button:hover{
 
         <br>
 
-        <div id="logs">
-            <div class="status-line ok">
-                Trạng thái: Sẵn sàng
-            </div>
-        </div>
+        <div id="logs"></div>
 
         <div id="result" class="result"></div>
 
@@ -365,27 +392,30 @@ button:hover{
 
 </div>
 
+
 <div class="footer">
 GREEN BYPASS SYSTEM • DEMO
 </div>
 
 </div>
 
+
 <script>
 
-/* =========================
+/* =====================================================
    LINK LẤY CODE
-========================= */
+===================================================== */
 
 const codePage =
-    "https://lentop.one/ddxBSv";
+    "https://lentop.one/ucb6ggk";
 
-document.getElementById("getCode").href = codePage;
+document.getElementById("getCode").href =
+    codePage;
 
 
-/* =========================
+/* =====================================================
    MÃ TRUY CẬP
-========================= */
+===================================================== */
 
 const firstCode = "K8F2M9P4VT";
 
@@ -402,20 +432,48 @@ const validCodes = [
 ];
 
 
-/* =========================
+/* =====================================================
+   KHÔI PHỤC TRẠNG THÁI SAU KHI F5
+===================================================== */
+
+function restoreAccess(){
+
+    const access =
+        localStorage.getItem(
+            "greenBypassAccess"
+        );
+
+    if(access === "true"){
+
+        document.getElementById("loginCard")
+            .style.display = "none";
+
+        document.getElementById("tool")
+            .classList.remove("hidden");
+
+    }
+
+}
+
+
+/* =====================================================
    KIỂM TRA CODE
-========================= */
+===================================================== */
 
 function checkCode(){
 
     const code =
         document.getElementById("accessCode")
-        .value.trim();
+        .value
+        .trim();
 
     const msg =
         document.getElementById("codeMessage");
 
     msg.style.display = "block";
+
+
+    /* Mã K8F2M9P4VT */
 
     if(code === firstCode){
 
@@ -427,6 +485,9 @@ function checkCode(){
 
         return;
     }
+
+
+    /* Mã mở khóa */
 
     if(code === secondCode){
 
@@ -440,6 +501,9 @@ function checkCode(){
         return;
     }
 
+
+    /* Các mã hợp lệ */
+
     if(validCodes.includes(code)){
 
         msg.className = "message green";
@@ -452,14 +516,25 @@ function checkCode(){
         return;
     }
 
+
     msg.className = "message red";
 
     msg.textContent =
         "Mã truy cập không hợp lệ.";
+
 }
 
 
+/* =====================================================
+   MỞ TOOL + LƯU TRẠNG THÁI
+===================================================== */
+
 function openTool(){
+
+    localStorage.setItem(
+        "greenBypassAccess",
+        "true"
+    );
 
     document.getElementById("loginCard")
         .style.display = "none";
@@ -467,26 +542,50 @@ function openTool(){
     document.getElementById("tool")
         .classList.remove("hidden");
 
+    restoreSelectedSites();
+
 }
 
 
-/* =========================
+/* =====================================================
    CHỌN SITE
-========================= */
+===================================================== */
 
-let selectedSites = [];
+let selectedSites =
+    JSON.parse(
+        localStorage.getItem(
+            "greenSelectedSites"
+        ) || "[]"
+    );
 
-document.querySelectorAll(".site").forEach(site => {
+
+document.querySelectorAll(".site")
+.forEach(site => {
+
+    const name = site.dataset.site;
+
+
+    /* Khôi phục site */
+
+    if(selectedSites.includes(name)){
+
+        site.classList.add("selected");
+
+    }
+
 
     site.addEventListener("click", () => {
 
-        const name = site.dataset.site;
-
         site.classList.toggle("selected");
+
 
         if(site.classList.contains("selected")){
 
-            selectedSites.push(name);
+            if(!selectedSites.includes(name)){
+
+                selectedSites.push(name);
+
+            }
 
         }else{
 
@@ -497,14 +596,40 @@ document.querySelectorAll(".site").forEach(site => {
 
         }
 
+
+        localStorage.setItem(
+            "greenSelectedSites",
+            JSON.stringify(selectedSites)
+        );
+
     });
 
 });
 
 
-/* =========================
+function restoreSelectedSites(){
+
+    document.querySelectorAll(".site")
+    .forEach(site => {
+
+        if(
+            selectedSites.includes(
+                site.dataset.site
+            )
+        ){
+
+            site.classList.add("selected");
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
    KIỂM TRA HTTPS
-========================= */
+===================================================== */
 
 function validHttps(value){
 
@@ -523,9 +648,9 @@ function validHttps(value){
 }
 
 
-/* =========================
+/* =====================================================
    LOG
-========================= */
+===================================================== */
 
 function addLog(text,type="ok"){
 
@@ -543,21 +668,24 @@ function addLog(text,type="ok"){
 }
 
 
-/* =========================
+/* =====================================================
    NÚT BYPASS
-========================= */
+===================================================== */
 
 document.getElementById("bypass")
 .addEventListener("click", () => {
 
     const url =
         document.getElementById("url")
-        .value.trim();
+        .value
+        .trim();
 
     const msg =
         document.getElementById("urlMessage");
 
+
     msg.style.display = "block";
+
 
     if(!url){
 
@@ -570,6 +698,7 @@ document.getElementById("bypass")
 
     }
 
+
     if(!validHttps(url)){
 
         msg.className = "message red";
@@ -580,6 +709,7 @@ document.getElementById("bypass")
         return;
 
     }
+
 
     if(selectedSites.length === 0){
 
@@ -592,94 +722,138 @@ document.getElementById("bypass")
 
     }
 
+
+    /* Lưu URL */
+
+    localStorage.setItem(
+        "greenLastURL",
+        url
+    );
+
+
     msg.style.display = "none";
 
+
     const card =
-        document.getElementById("statusCard");
+        document.getElementById(
+            "statusCard"
+        );
 
     card.style.display = "block";
 
-    document.getElementById("logs").innerHTML =
+
+    document.getElementById("logs")
+        .innerHTML =
         '<div class="status-line ok">' +
         'Trạng thái: Sẵn sàng' +
         '</div>';
 
+
     document.getElementById("result")
         .style.display = "none";
+
 
     const button =
         document.getElementById("bypass");
 
     button.disabled = true;
 
+
     let seconds = 15;
+
 
     const timer =
         document.getElementById("timer");
 
     const bar =
-        document.getElementById("progressBar");
+        document.getElementById(
+            "progressBar"
+        );
+
 
     timer.textContent = seconds;
 
     bar.style.width = "0%";
+
 
     addLog(
         "Đang kiểm tra kết nối...",
         "wait"
     );
 
+
     setTimeout(() => {
+
         addLog(
             "Kết nối thành công!",
             "ok"
         );
+
     },1000);
 
+
     setTimeout(() => {
+
         addLog(
             "Đang tải module...",
             "wait"
         );
+
     },2000);
 
+
     setTimeout(() => {
+
         addLog(
             "Tải module hoàn tất!",
             "ok"
         );
+
     },4000);
 
+
     setTimeout(() => {
+
         addLog(
             "Đang giả lập bypass...",
             "wait"
         );
+
     },6000);
 
+
     setTimeout(() => {
+
         addLog(
             "Bỏ qua xác thực...",
             "wait"
         );
+
     },8000);
 
+
     setTimeout(() => {
+
         addLog(
             "Đang xác nhận...",
             "wait"
         );
+
     },10000);
+
 
     const interval =
         setInterval(() => {
 
             seconds--;
 
-            timer.textContent = seconds;
+            timer.textContent =
+                seconds;
 
             bar.style.width =
-                ((15 - seconds) / 15 * 100) + "%";
+                ((15 - seconds) / 15 * 100) +
+                "%";
+
 
             if(seconds <= 0){
 
@@ -694,32 +868,44 @@ document.getElementById("bypass")
 });
 
 
-/* =========================
+/* =====================================================
    KẾT QUẢ
-========================= */
+===================================================== */
 
 function finish(){
 
     document.getElementById("timer")
         .textContent = "✓";
 
-    document.getElementById("progressBar")
-        .style.width = "100%";
+
+    document.getElementById(
+        "progressBar"
+    ).style.width = "100%";
+
 
     addLog(
         "Bypass thành công!",
         "ok"
     );
 
+
     addLog(
         "Bạn đã vượt qua giới hạn!",
         "ok"
     );
 
+
     const result =
         document.getElementById("result");
 
+
     result.style.display = "block";
+
+
+    /*
+       85% lỗi kết nối
+       15% Error 404
+    */
 
     if(Math.random() < 0.85){
 
@@ -737,8 +923,31 @@ function finish(){
 
     }
 
+
     document.getElementById("bypass")
         .disabled = false;
+
+}
+
+
+/* =====================================================
+   KHÔI PHỤC KHI TRANG VỪA LOAD
+===================================================== */
+
+restoreAccess();
+
+
+/* Khôi phục URL */
+
+const savedURL =
+    localStorage.getItem(
+        "greenLastURL"
+    );
+
+if(savedURL){
+
+    document.getElementById("url")
+        .value = savedURL;
 
 }
 
